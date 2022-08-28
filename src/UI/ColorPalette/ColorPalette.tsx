@@ -213,7 +213,7 @@ const ColorPalette = () => {
 
   return (
     <div className="colorPalette regular_text scrollWheelSm">
-      <div className="color_result_wrapper">
+      <div className="color_result_wrapper colorPalette_rad">
         <div
           style={{
             background: rgba(),
@@ -421,7 +421,7 @@ const ColorPalette = () => {
             .fill(0)
             .map((num, n) => (
               <AutoWrapper key={n} className="prev_color_wrapper">
-                <div className="prev_color" key={n}></div>
+                <div className="prev_color colorPalette_rad" key={n}></div>
               </AutoWrapper>
             ))}
         </div>

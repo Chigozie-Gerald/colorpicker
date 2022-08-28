@@ -19,6 +19,10 @@
   gap: var(--gap) 0;
   font-weight: 500;
 }
+.colorPalette_rad {
+  overflow: hidden;
+  border-radius: 3px;
+}
 
 .color_scheme_wrapper,
 .color_scheme_code {
@@ -48,7 +52,6 @@
 }
 
 .color_scheme_wrapper > .frame_wrapper {
-  background-color: #ccc;
   position: relative;
   overflow: hidden;
 }
