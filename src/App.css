@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: "Nunito_Lean";
+  src: local("Nunito_Lean"),
+    url("./Nunito_Sans/NunitoSans-Regular.ttf") format("truetype");
+}
+* {
+  box-sizing: border-box;
+  font-weight: 400;
+  font-family: "Nunito_Lean", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+.regular_text > *,
+.regular_text {
+  font-family: "Nunito_Lean", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.colorpicker {
+  --shadowFloat: 0 2px 6px 2px rgb(60 64 67 / 10%);
+  --color: rgb(74, 74, 74);
+  color: rgb(74, 74, 74);
+  --lightColor: rgba(238, 238, 238, 0.447);
+  --borderColor: rgb(231, 231, 231);
+  --shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+    rgba(17, 17, 26, 0.05) 0px 0px 3px;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+  padding: 2rem;
   display: flex;
-  flex-direction: column;
+  background-color: rgb(250, 250, 250);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.center {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.img_div_contain {
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*Scroller*/
+
+.scrollWheelSm::-webkit-scrollbar {
+  width: 0.5rem;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.scrollWheelSm::-webkit-scrollbar-track {
+  background-color: transparent;
+  overflow: hidden;
+}
+.scrollWheelSm::-webkit-scrollbar-thumb {
+  background-color: rgb(200, 200, 200);
+  background-clip: padding-box;
+  min-height: 2rem;
+  max-height: 10rem;
+  border-radius: 0.125rem;
+  border-radius: 4px;
+  border: 0.125rem solid transparent;
+}
+.scrollWheelSm::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+.scrollWheelSm::-webkit-scrollbar-corner {
+  background: transparent;
 }
