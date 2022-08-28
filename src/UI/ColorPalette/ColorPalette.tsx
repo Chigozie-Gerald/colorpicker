@@ -136,7 +136,8 @@ const ColorPalette = () => {
 
   const trackMovement = (
     rect: Exclude<rect, undefined>,
-    trackFunc: (Y: number, rect: Exclude<rect, undefined>) => void
+    trackFunc: (Y: number, rect: Exclude<rect, undefined>) => void,
+    element: Element
   ) => {
     const move = (e: MouseEvent) => {
       const y_window = e.clientY;
@@ -149,6 +150,7 @@ const ColorPalette = () => {
       document.body.style.cursor = "auto";
       setMoveGrade(false);
       setMoveColor(false);
+      element.classList.remove(`moving_no_transit`);
     };
 
     //get the clientY
@@ -159,7 +161,7 @@ const ColorPalette = () => {
     document.body.style.cursor = "grabbing";
   };
 
-  const windowMovement = (rect: Exclude<rect, undefined>) => {
+  const windowMovement = (rect: Exclude<rect, undefined>, element: Element) => {
     const move = (e: MouseEvent) => {
       document.body.style.cursor = "default";
       const x_window = e.clientX;
@@ -171,6 +173,7 @@ const ColorPalette = () => {
     const move_unbind = (e: MouseEvent) => {
       window.removeEventListener("mousemove", move);
       document.body.style.cursor = "auto";
+      element.classList.remove(`moving_no_transit`);
     };
 
     //get the clientX and Y values
@@ -233,7 +236,7 @@ const ColorPalette = () => {
               style={{ backgroundColor: rgb(rootColor) }}
               onClick={(e) => {
                 e.preventDefault();
-                const element = e.target as Element;
+                const element = e.currentTarget as Element;
                 const rect = element.getBoundingClientRect();
                 const x = rect.x;
                 const y = element.getBoundingClientRect().y;
@@ -245,11 +248,12 @@ const ColorPalette = () => {
               }}
               onMouseDown={(e) => {
                 e.preventDefault();
-                const element = e.target as Element;
+                const element = e.currentTarget as Element;
+                element.classList.add(`moving_no_transit`);
                 const rect = element.getBoundingClientRect();
 
                 //Function
-                windowMovement(rect);
+                windowMovement(rect, element);
               }}
             >
               <div
@@ -269,7 +273,7 @@ const ColorPalette = () => {
           <div
             onClick={(e) => {
               e.preventDefault();
-              const element = e.target as Element;
+              const element = e.currentTarget as Element;
               const rect = element.getBoundingClientRect();
               const y = rect.y;
               const Y = e.clientY - y;
@@ -277,10 +281,11 @@ const ColorPalette = () => {
             }}
             onMouseDown={(e) => {
               e.preventDefault();
-              const element = e.target as Element;
+              const element = e.currentTarget as Element;
+              element.classList.add(`moving_no_transit`);
               const rect = element.getBoundingClientRect();
               setMoveGrade(true);
-              trackMovement(rect, trackGrade);
+              trackMovement(rect, trackGrade, element);
             }}
             className={`inner ${moveGrade ? `grabbing` : ``}`}
           >
@@ -300,7 +305,7 @@ const ColorPalette = () => {
             }}
             onClick={(e) => {
               e.preventDefault();
-              const element = e.target as Element;
+              const element = e.currentTarget as Element;
               const rect = element.getBoundingClientRect();
               const y = rect.y;
               const Y = e.clientY - y;
@@ -308,10 +313,11 @@ const ColorPalette = () => {
             }}
             onMouseDown={(e) => {
               e.preventDefault();
-              const element = e.target as Element;
+              const element = e.currentTarget as Element;
+              element.classList.add(`moving_no_transit`);
               const rect = element.getBoundingClientRect();
               setMoveColor(true);
-              trackMovement(rect, trackRoot);
+              trackMovement(rect, trackRoot, element);
             }}
             className={`inner ${moveColor ? `grabbing` : ``}`}
           ></div>
@@ -320,7 +326,7 @@ const ColorPalette = () => {
       </div>
       <div className="color_scheme_code">
         <div
-          onClick={(e) => {
+          onClick={() => {
             // @ts-ignore
             const hasDropper = window.EyeDropper as boolean;
             if (!hasDropper) {
@@ -415,14 +421,7 @@ const ColorPalette = () => {
             .fill(0)
             .map((num, n) => (
               <AutoWrapper key={n} className="prev_color_wrapper">
-                <div
-                  style={{
-                    backgroundColor:
-                      n === 0 ? `rgb(${colorRGB.join(`, `)}, ${grade})` : ``,
-                  }}
-                  className="prev_color"
-                  key={n}
-                ></div>
+                <div className="prev_color" key={n}></div>
               </AutoWrapper>
             ))}
         </div>

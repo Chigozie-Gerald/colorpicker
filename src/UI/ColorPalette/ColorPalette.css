@@ -2,7 +2,7 @@
   overflow-y: auto;
   padding: 1rem;
   z-index: 99999;
-  border: 1px solid var(--borderColor);
+  /* border: 1px solid var(--borderColor); */
   height: fit-content;
   max-height: 50rem;
   width: 20rem;
@@ -126,16 +126,6 @@
 .color_scheme_wrapper > .grade .inner {
   position: relative;
   width: 100%;
-  /* background: linear-gradient(
-    to bottom,
-    rgb(255, 0, 0),
-    rgb(255, 255, 0),
-    rgb(0, 255, 0),
-    rgb(0, 255, 255),
-    rgb(0, 0, 255),
-    rgb(255, 0, 255),
-    rgb(255, 0, 0)
-  ); */
 }
 
 .opacity_wrap .bar_wheel,
@@ -144,6 +134,7 @@
   bottom: 0;
   left: 0;
   position: absolute;
+  /* transition: all 120ms ease; */
   --size: 0.25rem;
   height: var(--size);
   width: 100%;

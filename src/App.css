@@ -64,6 +64,11 @@ svg.noFill path {
   fill: none !important;
 }
 
+.moving_no_transit,
+.moving_no_transit > * {
+  transition: all 0ms linear !important;
+}
+
 .mode_button {
   margin-bottom: 1rem;
   width: fit-content;
