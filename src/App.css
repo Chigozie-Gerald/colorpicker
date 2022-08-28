@@ -4,6 +4,7 @@
     url("./Nunito_Sans/NunitoSans-Regular.ttf") format("truetype");
 }
 * {
+  transition: background-color 200ms ease, border 200ms ease;
   box-sizing: border-box;
   font-weight: 400;
   font-family: "Nunito_Lean", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -23,11 +24,56 @@
   --borderColor: rgb(231, 231, 231);
   --shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
     rgba(17, 17, 26, 0.05) 0px 0px 3px;
+  --btnColor: rgb(240, 240, 240, 1);
+  --bckColor: rgb(250, 250, 250);
+  --btn_font_color: rgb(74, 74, 74);
+  --genColor: rgb(255, 255, 255);
+  --side_toggle: rgb(249, 249, 249);
+  --side_toggle_svg: var(--color);
+  --side_toggle_hover: rgb(244, 244, 244);
+  --bar: rgba(0, 0, 0, 0.7);
 
   min-height: 100vh;
-  padding: 2rem;
+  padding: 1.5rem;
   display: flex;
-  background-color: rgb(250, 250, 250);
+  flex-direction: column;
+  background-color: var(--bckColor);
+}
+.colorpicker.dark {
+  --shadowFloat: 0 2px 6px 2px rgb(195 191 188 / 10%);
+  --color: rgb(181, 181, 181);
+  color: rgb(181, 181, 181);
+  --lightColor: rgba(17, 17, 17, 0.447);
+  --borderColor: rgb(24, 24, 24);
+  --shadow: rgba(238, 238, 229, 0.05) 0px 1px 0px,
+    rgba(238, 238, 229, 0.05) 0px 0px 3px;
+  --btnColor: rgb(30, 30, 30, 1);
+  --bckColor: rgb(51, 51, 51, 1);
+  --btn_font_color: rgb(243, 243, 243);
+  --genColor: rgb(37, 37, 38, 1);
+  --side_toggle: rgb(51, 51, 51, 1);
+  --side_toggle_svg: var(--color);
+  --side_toggle_hover: rgb(60, 60, 60);
+  --bar: #fff;
+}
+
+svg path {
+  fill: var(--btn_font_color);
+}
+svg.noFill path {
+  fill: none !important;
+}
+
+.mode_button {
+  margin-bottom: 1rem;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  box-shadow: var(--shadow);
+  color: var(--btn_font_color);
+  background-color: var(--btnColor);
+  border: none;
+  cursor: pointer;
 }
 
 .flex {

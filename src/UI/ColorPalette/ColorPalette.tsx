@@ -10,10 +10,13 @@ import {
   frame_color,
   getColor,
   getColorDetails,
+  getGradient,
   getHeightFromRoot,
   getOpacity,
+  getRange,
   hexToRgb,
   luminance,
+  modify,
   normalize,
   rgbToHex,
   scheme,
@@ -67,6 +70,8 @@ const ColorPalette = () => {
   }>();
 
   const [colorRGB, setColorRGB] = useState<scheme>(color_array);
+  const [oldColorRGB, setOldColorRGB] = useState<scheme>(color_array);
+
   const [rootColor, setRootColor] = useState<scheme>(color_array);
   const [grade, setGrade] = useState(getOpacity(0, 0));
   const [frameCord, setFrameCord] = useState<[number, number]>([...initFrame]);
@@ -77,10 +82,17 @@ const ColorPalette = () => {
   const [moveColor, setMoveColor] = useState(false);
   const [copied, setCopied] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | undefined>();
+
   const rgb = (color: scheme = colorRGB) => {
     return `rgb(${color.join(`, `)})`;
   };
   const rgba = () => `rgb(${colorRGB.join(`, `)}, ${grade})`;
+
+  const setNewColor = (color: scheme) => {
+    const old_color = colorRGB;
+    setOldColorRGB(old_color);
+    setColorRGB(color);
+  };
 
   const frameMovement = (
     X: number,
@@ -97,7 +109,7 @@ const ColorPalette = () => {
       rootColor
     );
     setRootColor(root);
-    setColorRGB(array);
+    setNewColor(array);
   };
 
   const trackGrade = (Y: number, rect: Exclude<rect, undefined>) => {
@@ -119,7 +131,7 @@ const ColorPalette = () => {
     );
 
     setRootColor(array);
-    setColorRGB(rgb);
+    setNewColor(rgb);
   };
 
   const trackMovement = (
@@ -169,8 +181,49 @@ const ColorPalette = () => {
     document.body.style.cursor = "default";
   };
 
+  const getOldRGB = (): string => {
+    const oldRange = getRange(oldColorRGB);
+    const currentRange = getRange(colorRGB);
+    const oldRoot = oldColorRGB.map((num) => modify(num, oldRange)) as scheme;
+    const currentRoot = colorRGB.map((num) =>
+      modify(num, currentRange)
+    ) as scheme;
+
+    let retain = true;
+    for (let i = 0; i < oldRoot.length; i++) {
+      const num1 = oldRoot[i];
+      const num2 = currentRoot[i];
+      if (Math.abs(num1 - num2) < 3) {
+        continue;
+      } else {
+        retain = false;
+        break;
+      }
+    }
+
+    if (retain) {
+      return rgb(oldColorRGB);
+    } else {
+      return rgb();
+    }
+  };
+
   return (
     <div className="colorPalette regular_text scrollWheelSm">
+      <div className="color_result_wrapper">
+        <div
+          style={{
+            background: rgba(),
+          }}
+          className="current_color flex1"
+        ></div>
+        <div
+          style={{
+            background: getOldRGB(),
+          }}
+          className="prev_color"
+        ></div>
+      </div>
       <div className="color_scheme_wrapper">
         <div className="frame_wrapper flex1">
           <AutoWrapper>
@@ -214,7 +267,6 @@ const ColorPalette = () => {
         </div>
         <div className="opacity_wrap">
           <div
-            style={{ backgroundColor: rgb() }}
             onClick={(e) => {
               e.preventDefault();
               const element = e.target as Element;
@@ -231,11 +283,21 @@ const ColorPalette = () => {
               trackMovement(rect, trackGrade);
             }}
             className={`inner ${moveGrade ? `grabbing` : ``}`}
-          ></div>
+          >
+            <div
+              style={{
+                background: `linear-gradient(to bottom, ${rgb()}, transparent)`,
+              }}
+              className="color_track"
+            ></div>
+          </div>
           <div style={{ top: gradeCord }} className="bar_wheel"></div>
         </div>
         <div className="grade">
           <div
+            style={{
+              background: getGradient(),
+            }}
             onClick={(e) => {
               e.preventDefault();
               const element = e.target as Element;
@@ -295,7 +357,7 @@ const ColorPalette = () => {
 
                   setFrameCord([x_bar, y_bar]);
                   setRootColor(root);
-                  setColorRGB(color);
+                  setNewColor(color);
                   setGrade(1);
                   setGradeCord(0);
                 }
@@ -338,7 +400,7 @@ const ColorPalette = () => {
           >
             <div className="inner center">
               {copied ? (
-                <CheckIcon className="img_div_contain" />
+                <CheckIcon className="img_div_contain noFill" />
               ) : (
                 <CopyIcon className="img_div_contain" />
               )}

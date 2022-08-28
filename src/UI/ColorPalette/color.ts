@@ -12,6 +12,17 @@ export const colorArray: scheme[] = [
   [topValue, 0, 0],
 ];
 
+export const getGradient = (): string => {
+  const color_format_array = colorArray.map((rgb) => {
+    const r = rgb[0];
+    const g = rgb[1];
+    const b = rgb[2];
+    return `rgb(${r}, ${g}, ${b})`;
+  });
+  const color_string = color_format_array.join(`, `);
+  return `linear-gradient(to bottom, ${color_string})`;
+};
+
 const rootRetrieve = (color: scheme): scheme => {
   const r = color[0];
   const g = color[1];
@@ -254,7 +265,9 @@ export const cordColor = (
  * @param array This is an array of numbers.
  * @returns An object with keys biggest and smallest whose values are the biggest and smallest values in `array`
  */
-const getRange = (array: scheme): { biggest: number; smallest: number } => {
+export const getRange = (
+  array: scheme
+): { biggest: number; smallest: number } => {
   let biggest = array[0];
   let smallest = array[0];
 
@@ -304,7 +317,7 @@ const getRangeIndex = (
  * @param range smallest and biggest number in the RGB color array [`number`, `number`, `number`]
  * @returns Modified value transformed to range between 0 and 255. In other words, the root individual value
  */
-const modify = (
+export const modify = (
   value: number,
   range: { smallest: number; biggest: number }
 ): number => {

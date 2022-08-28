@@ -10,10 +10,12 @@
   left: 16rem;
   box-shadow: var(--shadowFloat);
   border-radius: 3px;
-  background-color: #fff;
+  background-color: var(--genColor);
   display: flex;
   flex-direction: column;
   --gap: 0.75rem;
+  --width_side: 2rem;
+  --trackGap: 0.35rem;
   gap: var(--gap) 0;
   font-weight: 500;
 }
@@ -21,8 +23,28 @@
 .color_scheme_wrapper,
 .color_scheme_code {
   display: flex;
-  gap: 0 0.35rem;
-  --width_side: 2rem;
+  gap: 0 var(--trackGap);
+}
+
+.color_result_wrapper {
+  height: 2rem;
+  background-color: #ddd;
+  display: flex;
+  position: relative;
+  background: url("../../assets/alpha.png");
+  background-repeat: repeat;
+}
+.color_result_wrapper .current_color {
+  height: 2rem;
+  background-color: #ddd;
+  display: flex;
+  position: relative;
+  background: url("../../assets/alpha.png");
+  background-repeat: repeat;
+}
+.color_result_wrapper .prev_color {
+  width: calc(2 * (var(--width_side) + var(--trackGap)));
+  background-color: blue;
 }
 
 .color_scheme_wrapper > .frame_wrapper {
@@ -53,6 +75,7 @@
 
 .color_scheme_wrapper > .frame_wrapper .pointer.circle {
   position: absolute;
+  transition: all 120ms ease;
   --size: 0.5rem;
   z-index: 9;
   height: var(--size);
@@ -88,21 +111,22 @@
 .color_scheme_wrapper > .opacity_wrap .inner {
   position: relative;
   width: 100%;
-  background: url("../../assets/alpha_mask.png");
-  background-size: cover;
+  background: url("../../assets/alpha.png");
+  background-repeat: repeat;
 }
-.color_scheme_wrapper > .opacity_wrap .inner > .checked {
-  position: relative;
-  height: 100%;
-  background: url("../../assets/alpha_mask.png");
-  background-size: contain;
-  background-repeat: repeat-x;
+.color_scheme_wrapper > .opacity_wrap .inner .color_track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .color_scheme_wrapper > .grade .inner {
   position: relative;
   width: 100%;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     rgb(255, 0, 0),
     rgb(255, 255, 0),
@@ -111,7 +135,7 @@
     rgb(0, 0, 255),
     rgb(255, 0, 255),
     rgb(255, 0, 0)
-  );
+  ); */
 }
 
 .opacity_wrap .bar_wheel,
@@ -123,7 +147,7 @@
   --size: 0.25rem;
   height: var(--size);
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--bar);
   pointer-events: none;
 }
 
@@ -147,16 +171,16 @@
   width: var(--toggle_width);
   border-top-left-radius: inherit;
   border-bottom-left-radius: inherit;
-  background-color: rgb(249, 249, 249);
+  background-color: var(--side_toggle);
   border-right: 1px solid var(--borderColor);
   cursor: pointer;
   padding: 1px;
 }
 .code_value_wrapper .sideToggle_wrapper:hover {
-  background-color: rgb(244, 244, 244);
+  background-color: var(--side_toggle_hover);
 }
 .code_value_wrapper .sideToggle_wrapper svg path {
-  fill: var(--color);
+  fill: var(--side_toggle_svg);
 }
 
 .color_scheme_code .plane {
